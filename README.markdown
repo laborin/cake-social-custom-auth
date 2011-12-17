@@ -19,7 +19,7 @@ CREATE TABLE `users` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 ```
 
-```
+```terminal
 $ ./Console/cake bake model user
 $ ./Console/cake bake controller user --public
 $ ./Console/cake bake view user
@@ -28,7 +28,7 @@ $ ./Console/cake bake view user
 To get the auth component working you have to set it up in the users controller 
 (or app controller for application-wide auth).
 
-```PHP
+```php
 public $components = array(
 	'Auth',
 	'Session'
@@ -37,7 +37,7 @@ public $components = array(
 
 You need to create a login and logout action, as well as a login view.
 
-```PHP
+```php
 public function login() {
 	if ($this->request->is('post') || $this->request->is('get')) {
 		
@@ -58,7 +58,7 @@ public function login() {
 }
 ```
 
-```PHP
+```php
 function logout(){
 	$this->Session->setFlash('Logged out.');
 	$this->redirect($this->Auth->logout());
@@ -66,9 +66,13 @@ function logout(){
 ```
 
 Create links/forms to give the user the possibility to chose a authentication service in your
-login.ctp view.
+login.ctp view. The openID authentification can be used for multiple services (myOpenId, google,
+yahoo etc.), you just have to change the openid url.
 
-```php
+Google: https://www.google.com/accounts/o8/id
+Yahoo: http://yahoo.com/
+
+```phphtml
 <h1>Sign in</h1>
 <p>Sign in with one of the services below.</p>
 <h2>Facebook</h2>
