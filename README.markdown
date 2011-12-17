@@ -19,7 +19,7 @@ CREATE TABLE `users` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 ```
 
-```terminal
+```
 $ ./Console/cake bake model user
 $ ./Console/cake bake controller user --public
 $ ./Console/cake bake view user
@@ -69,10 +69,9 @@ Create links/forms to give the user the possibility to chose a authentication se
 login.ctp view. The openID authentification can be used for multiple services (myOpenId, google,
 yahoo etc.), you just have to change the openid url.
 
-Google: https://www.google.com/accounts/o8/id
-Yahoo: http://yahoo.com/
+(Google: https://www.google.com/accounts/o8/id,Yahoo: http://yahoo.com/)
 
-```phphtml
+```html
 <h1>Sign in</h1>
 <p>Sign in with one of the services below.</p>
 <h2>Facebook</h2>
