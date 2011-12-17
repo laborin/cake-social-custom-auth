@@ -68,7 +68,7 @@ function logout(){
 Create links/forms to give the user the possibility to chose a authentication service in your
 login.ctp view.
 
-```HTML
+```php
 <h1>Sign in</h1>
 <p>Sign in with one of the services below.</p>
 <h2>Facebook</h2>
