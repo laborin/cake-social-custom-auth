@@ -25,6 +25,9 @@ $ ./Console/cake bake controller user --public
 $ ./Console/cake bake view user
 ```
 
+The Auth component
+------------------
+
 To get the auth component working you have to set it up in the users controller 
 (or app controller for application-wide auth).
 
@@ -88,11 +91,63 @@ yahoo etc.), you just have to change the openid url.
 	echo $this->Form->submit("Login with twitter",array('label' => false));
 	echo $this->Form->end();
 ?>
-<h2>OpenID</h2>
+<h2>OpenID - MyOpenID</h2>
 <?php
 	echo $this->Form->create('User', array('type' => 'post', 'action' => 'login'));
 	echo $this->Form->hidden('OpenidUrl.openid', array('label' => false,'value' => 'http://myopenid.com/'));
 	echo $this->Form->submit("login with openid",array('label' => false,));
 	echo $this->Form->end();
+?>	
+<h2>OpenID - Google</h2>
+<?php
+	echo $this->Form->create('User', array('type' => 'post', 'action' => 'login'));
+	echo $this->Form->hidden('OpenidUrl.openid', array('label' => false,'value' => 'https://www.google.com/accounts/o8/id'));
+	echo $this->Form->submit("login with googles openid",array('label' => false,));
+	echo $this->Form->end();
+?>	
+<h2>OpenID - Yahoo</h2>
+<?php
+	echo $this->Form->create('User', array('type' => 'post', 'action' => 'login'));
+	echo $this->Form->hidden('OpenidUrl.openid', array('label' => false,'value' => 'Yahoo: http://yahoo.com/'));
+	echo $this->Form->submit("login with yahoos openid",array('label' => false,));
+	echo $this->Form->end();
 ?>			
 ```
+
+Facebook Authentication Object
+------------------------------
+
+Create a folder named Auth in your app/Controller/Component directory. Copy the FacebookAuthenticate.php file into the Folder.
+Add your app id and secret and the url of your login action in the settings array. You can create an app on developers.facebook.com.
+
+```php
+var $settings = array(
+	"app_id" => "your_app_id",
+	"app_secret" => "your_app_secret",
+	"url" => "http://connect.local/users/login"
+); 
+```
+
+Finally add the custom authentication object to the auth component in our users controller. You can do this in a beforeFilter callback:
+
+```php
+function beforeFilter() {
+	parent::beforeFilter();
+	$this->Auth->authenticate = array(
+		AuthComponent::ALL => array('userModel' => 'User'),
+		'Facebook'
+	);
+}
+```
+
+Now you should be able to login to your webapp with facebook. Just open the users/index action in your browser and click on 
+the facebook link. 
+
+Troubleshooting: Be sure that your Facebook app configuration is correct, facebook allows authentication only from the url 
+saved in the app-config.
+
+Twitter Authentication Object
+------------------------------
+
+OpenID/Google/Yahoo Authentication Object
+-----------------------------------------
