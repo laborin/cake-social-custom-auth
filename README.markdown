@@ -147,7 +147,38 @@ Troubleshooting: Be sure that your Facebook app configuration is correct, facebo
 saved in the app-config.
 
 Twitter Authentication Object
-------------------------------
+-----------------------------
+
+note: The code in TwitterAuthenticate.php is pretty much an implementation of the oauth example given on http://code.42dh.com/oauth/.
+
+Copy the TwitterAuthenticate.php file into the app/Controller/Component Folder. Add your app id and secret and the url of your login action (this time with the twitter_callback parameter) in the settings array. You can create an app on dev.twitter.com.
+
+```php
+var $settings = array(
+   "app_id" => "xxxxxxxxxxxxxxxxxxxxxx",
+   "app_secret" => "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "url" => "http://connect.local/users/login?twitter_callback=1"
+); 
+```
+
+To use Twitters OAuth mechanism we have to load some extern classes. Daniel Hofstetter has written a simple OAuth consumer class for CakePHP. You can
+download it from http://code.42dh.com/oauth/. The consumer class itself requires the PHP library for OAuth by Andy Smith, which is included in the download.
+
+Now add the custom authentication object to the auth component in our users controller. Extend the beforeFilter callback:
+
+```php
+function beforeFilter() {
+	parent::beforeFilter();
+	$this->Auth->authenticate = array(
+		AuthComponent::ALL => array('userModel' => 'User'),
+		'Facebook',
+		'Twitter'
+	);
+}
+```
+
+Now you should be able to login to your webapp with twitter.
+
 
 OpenID/Google/Yahoo Authentication Object
 -----------------------------------------
