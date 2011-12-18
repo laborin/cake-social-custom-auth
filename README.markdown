@@ -108,7 +108,7 @@ yahoo etc.), you just have to change the openid url.
 <h2>OpenID - Yahoo</h2>
 <?php
 	echo $this->Form->create('User', array('type' => 'post', 'action' => 'login'));
-	echo $this->Form->hidden('OpenidUrl.openid', array('label' => false,'value' => 'Yahoo: http://yahoo.com/'));
+	echo $this->Form->hidden('OpenidUrl.openid', array('label' => false,'value' => 'http://yahoo.com/'));
 	echo $this->Form->submit("login with yahoos openid",array('label' => false,));
 	echo $this->Form->end();
 ?>			
@@ -163,6 +163,7 @@ var $settings = array(
 
 To use Twitters OAuth mechanism we have to load some extern classes. Daniel Hofstetter has written a simple OAuth consumer class for CakePHP. You can
 download it from http://code.42dh.com/oauth/. The consumer class itself requires the PHP library for OAuth by Andy Smith, which is included in the download.
+Extract the two php-files to app/Vendor/OAuth/.
 
 Now add the custom authentication object to the auth component in our users controller. Extend the beforeFilter callback:
 
@@ -182,3 +183,33 @@ Now you should be able to login to your webapp with twitter.
 
 OpenID/Google/Yahoo Authentication Object
 -----------------------------------------
+
+note: OpenidAuthenticate.php uses much of the code of the OpenId example given on http://code.42dh.com/openid/.
+
+Copy the OpenidAuthenticate.php file into the app/Controller/Component Folder. Now change the settings array: realm has to be the base url of your web app, return_to the url of your login action.  
+
+```php
+var $settings = array(
+   "realm" => "http://connect.local",
+   "return_to" => "http://connect.local/users/login"
+); 
+```
+
+To use the OpenID mechanism we have to load the PHP OpenID library by JanRain, get it here: https://github.com/openid/php-openid/downloads. Extract the whole Auth-folder to your app/Vendor directory.
+Now add the custom authentication object to the auth component in our users controller. Extend the beforeFilter callback:
+
+```php
+function beforeFilter() {
+	parent::beforeFilter();
+	$this->Auth->authenticate = array(
+		AuthComponent::ALL => array('userModel' => 'User'),
+		'Facebook',
+		'Twitter',
+		'OpenId'
+	);
+}
+```
+
+Now you should be able to login to your webapp with any OpenId service. The users/login view 
+implements google openID, yahoo openID and myOpenID. Yust change the url in the form to add
+another service.

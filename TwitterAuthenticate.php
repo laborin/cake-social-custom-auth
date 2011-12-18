@@ -8,6 +8,9 @@
 	 *
 	 * Licensed under The MIT License
 	 * Redistributions of files must retain the above copyright notice
+	 * 
+	 * NOTE: The implementation of the twitter custom auth object is mainly based on
+	 * the OAuth examples on http://code.42dh.com/oauth/.
 	 *
 	 * @copyright     Copyright 2011, Daniel Auener, daniel.auener@gmail.com
 	 * @link          http://github.com/danielauener
