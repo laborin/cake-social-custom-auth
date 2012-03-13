@@ -20,6 +20,11 @@
 
 	App::uses('BaseAuthenticate', 'Controller/Component/Auth');
 	App::import('Vendor', 'OAuth', array('file' => 'OAuth'.DS.'oauth_consumer.php'));
+	
+	App::uses('Model', 'Model');
+    //This point don't have an AppModel class defined, so...
+    class AppModel extends Model {
+    }
 
 	/**
 	 * TwitterAuthenticate integrates Twitter authentication with the

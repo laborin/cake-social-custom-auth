@@ -21,6 +21,11 @@
 	App::uses('CakeSession', 'Model/Datasource');
 	App::uses('BaseAuthenticate', 'Controller/Component/Auth');
 	
+	App::uses('Model', 'Model');
+    //This point don't have an AppModel class defined, so...
+    class AppModel extends Model {
+    }
+	
 	/**
 	 * OpenidAuthenticate integrates OpenId authentication with the
 	 * CakePHP 2.0 Auth-Component. It uses Custom Authentication Objects
